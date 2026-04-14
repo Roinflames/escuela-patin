@@ -529,6 +529,208 @@
       transform: translateY(0);
     }
 
+    /* ─── CALENDAR ─── */
+    .calendar-section {
+      padding: 7rem 2rem;
+      position: relative;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(13,13,28,.6) 100%);
+    }
+    .cal-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .cal-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2.5rem 0 1.5rem;
+    }
+    .cal-nav-btn {
+      background: none;
+      border: 1px solid rgba(255,45,85,.3);
+      color: var(--pink);
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s;
+    }
+    .cal-nav-btn:hover { background: rgba(255,45,85,.1); border-color: var(--pink); }
+    .cal-month-label {
+      font-family: Impact, sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--white);
+      min-width: 220px;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-top: .5rem;
+    }
+    .cal-day-name {
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .5rem 0;
+    }
+    .cal-day-name:last-child { color: var(--pink); }
+    .cal-day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: .85rem;
+      color: var(--muted);
+      background: rgba(255,255,255,.02);
+    }
+    .cal-day.empty { background: none; }
+    .cal-day.past { opacity: .3; }
+    .cal-day.sunday-class {
+      background: linear-gradient(135deg, rgba(255,45,85,.15), rgba(255,45,85,.05));
+      border: 1px solid rgba(255,45,85,.35);
+      color: var(--white);
+      cursor: pointer;
+      font-weight: bold;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      position: relative;
+    }
+    .cal-day.sunday-class::after {
+      content: '🛼';
+      position: absolute;
+      bottom: 3px;
+      right: 4px;
+      font-size: .55rem;
+    }
+    .cal-day.sunday-class:hover {
+      background: linear-gradient(135deg, rgba(255,45,85,.35), rgba(255,45,85,.15));
+      transform: scale(1.08);
+      box-shadow: 0 0 18px rgba(255,45,85,.4);
+    }
+    .cal-day.sunday-class.today-sunday {
+      border-color: var(--cyan);
+      box-shadow: 0 0 14px rgba(0,245,212,.3);
+    }
+    .cal-legend {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .cal-legend span { display: flex; align-items: center; gap: .4rem; }
+    .cal-legend-dot {
+      width: 10px; height: 10px; border-radius: 3px;
+      background: rgba(255,45,85,.4);
+      border: 1px solid var(--pink);
+    }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(7,7,15,.85);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--surface);
+      border: 1px solid rgba(255,45,85,.25);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 440px;
+      position: relative;
+      box-shadow: 0 0 60px rgba(255,45,85,.12);
+      animation: fadeUp .3s ease;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      padding: .3rem .5rem;
+      border-radius: 6px;
+      transition: color .2s, background .2s;
+    }
+    .modal-close:hover { color: var(--white); background: rgba(255,255,255,.06); }
+    .modal-title {
+      font-family: Impact, sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: .3rem;
+    }
+    .modal-date {
+      font-size: .75rem;
+      letter-spacing: .2em;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+    .modal-field {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      color: var(--white);
+      font-family: inherit;
+      font-size: .85rem;
+      padding: .75rem 1rem;
+      margin-bottom: .9rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .modal-field:focus { border-color: rgba(255,45,85,.5); }
+    .modal-field option { background: var(--surface); }
+    .modal-submit {
+      width: 100%;
+      padding: .9rem;
+      background: linear-gradient(135deg, #25d366, #1da851);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: Impact, sans-serif;
+      font-size: 1rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: .4rem;
+      transition: opacity .2s, transform .15s;
+    }
+    .modal-submit:hover { opacity: .88; transform: translateY(-1px); }
+    .modal-note {
+      margin-top: 1rem;
+      font-size: .65rem;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-align: center;
+      line-height: 1.6;
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
@@ -546,6 +748,8 @@
     <div class="nav-logo"><img src="logo.png" alt="Bulnes pc" style="height:2rem;vertical-align:middle;margin-right:.5rem;border-radius:50%;">Bulnes pc</div>
     <ul class="nav-links">
       <li><a href="#galeria">Galería</a></li>
+      <li><a href="#clases">Clases</a></li>
+      <li><a href="#inscripcion" onclick="openModal(null)">Inscribirse</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
@@ -822,6 +1026,57 @@
     </div>
   </section>
 
+  <!-- CALENDAR -->
+  <section class="calendar-section" id="clases">
+    <div class="cal-inner">
+      <span class="section-label reveal">// Calendario</span>
+      <h2 class="section-title reveal">Clases los <span style="color:var(--pink)">Domingos</span></h2>
+      <p class="reveal" style="color:var(--muted);font-size:.85rem;letter-spacing:.1em;margin-bottom:0;line-height:1.7">
+        Selecciona un domingo para reservar tu lugar.
+      </p>
+
+      <div class="cal-nav-row reveal">
+        <button class="cal-nav-btn" id="calPrev">&#8592;</button>
+        <span class="cal-month-label" id="calTitle"></span>
+        <button class="cal-nav-btn" id="calNext">&#8594;</button>
+      </div>
+
+      <div class="cal-grid" id="calGrid"></div>
+
+      <div class="cal-legend reveal">
+        <span><span class="cal-legend-dot"></span> Clase disponible</span>
+        <span>Click para inscribirse</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSCRIPTION MODAL -->
+  <div class="modal-overlay" id="inscModal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      <div class="modal-title">Inscripci&#xF3;n</div>
+      <div class="modal-date" id="modalDateLabel">Domingo &mdash;</div>
+      <form id="inscForm" onsubmit="submitInscripcion(event)">
+        <input class="modal-field" id="inscNombre" type="text" placeholder="Nombre completo" required>
+        <input class="modal-field" id="inscTelefono" type="tel" placeholder="Tel&#xE9;fono (ej: +56 9 1234 5678)" required>
+        <select class="modal-field" id="inscNivel">
+          <option value="">Nivel (opcional)</option>
+          <option value="Principiante">Principiante</option>
+          <option value="Intermedio">Intermedio</option>
+          <option value="Avanzado">Avanzado</option>
+        </select>
+        <textarea class="modal-field" id="inscComentario" placeholder="Comentario o consulta (opcional)" rows="2" style="resize:none"></textarea>
+        <button class="modal-submit" type="submit">
+          Enviar por WhatsApp &#128172;
+        </button>
+      </form>
+      <p class="modal-note">
+        Al enviar, recibiremos tus datos por WhatsApp y te enviaremos una cotización personal.<br>
+        Sin compromiso.
+      </p>
+    </div>
+  </div>
+
   <!-- CONTACT -->
   <section class="contact" id="contacto">
     <div class="orb orb-a" style="opacity:.25"></div>
@@ -965,6 +1220,124 @@
     }, { threshold: .12 });
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    /* ── Calendar ── */
+    const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    let calYear, calMonth;
+
+    function initCal() {
+      const now = new Date();
+      calYear  = now.getFullYear();
+      calMonth = now.getMonth();
+      renderCal();
+    }
+
+    function renderCal() {
+      const grid  = document.getElementById('calGrid');
+      const title = document.getElementById('calTitle');
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      title.textContent = MONTHS_ES[calMonth] + ' ' + calYear;
+      grid.innerHTML = '';
+
+      // Day headers
+      ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'].forEach(d => {
+        const h = document.createElement('div');
+        h.className = 'cal-day-name';
+        h.textContent = d;
+        grid.appendChild(h);
+      });
+
+      // First day of month (Monday = 0)
+      const firstDay = new Date(calYear, calMonth, 1);
+      const startOffset = (firstDay.getDay() + 6) % 7; // convert Sun=0 to Mon=0
+      const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+      // Empty cells
+      for (let i = 0; i < startOffset; i++) {
+        const e = document.createElement('div');
+        e.className = 'cal-day empty';
+        grid.appendChild(e);
+      }
+
+      // Day cells
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date    = new Date(calYear, calMonth, d);
+        const dayOfWeek = date.getDay(); // 0=Sun
+        const isSunday  = dayOfWeek === 0;
+        const isPast    = date < today;
+
+        const cell = document.createElement('div');
+        cell.textContent = d;
+
+        if (isSunday) {
+          cell.className = 'cal-day sunday-class' + (isPast ? ' past' : '');
+          if (date.toDateString() === today.toDateString()) cell.classList.add('today-sunday');
+          if (!isPast) {
+            const label = d + ' de ' + MONTHS_ES[calMonth] + ' ' + calYear;
+            cell.addEventListener('click', () => openModal(label));
+            cell.title = 'Clase el ' + label + ' — Click para inscribirse';
+          }
+        } else {
+          cell.className = 'cal-day' + (isPast ? ' past' : '');
+        }
+        grid.appendChild(cell);
+      }
+    }
+
+    document.getElementById('calPrev').addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCal();
+    });
+    document.getElementById('calNext').addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCal();
+    });
+
+    initCal();
+
+    /* ── Modal ── */
+    let selectedDate = '';
+
+    function openModal(dateLabel) {
+      selectedDate = dateLabel || '';
+      const label = document.getElementById('modalDateLabel');
+      label.textContent = dateLabel ? 'Domingo ' + dateLabel : 'Clase de patín';
+      document.getElementById('inscModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('inscModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('inscModal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    function submitInscripcion(e) {
+      e.preventDefault();
+      const nombre     = document.getElementById('inscNombre').value.trim();
+      const telefono   = document.getElementById('inscTelefono').value.trim();
+      const nivel      = document.getElementById('inscNivel').value;
+      const comentario = document.getElementById('inscComentario').value.trim();
+
+      let msg = '¡Hola! Quiero inscribirme a una clase de Bulnes pc.\n\n';
+      msg += '📅 Fecha: ' + (selectedDate || 'Por definir') + '\n';
+      msg += '👤 Nombre: ' + nombre + '\n';
+      msg += '📞 Teléfono: ' + telefono + '\n';
+      if (nivel)      msg += '🎯 Nivel: ' + nivel + '\n';
+      if (comentario) msg += '💬 Comentario: ' + comentario + '\n';
+      msg += '\nQuedo a la espera de la cotización. ¡Gracias!';
+
+      const url = 'https://wa.me/56987177717?text=' + encodeURIComponent(msg);
+      window.open(url, '_blank');
+      closeModal();
+    }
   </script>
 </body>
 </html>
