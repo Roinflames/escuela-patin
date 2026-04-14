@@ -529,6 +529,135 @@
       transform: translateY(0);
     }
 
+    /* ─── HORARIO ─── */
+    .horario-section {
+      padding: 7rem 2rem;
+      position: relative;
+    }
+    .horario-inner {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .pack-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: .75rem 2rem;
+      background: linear-gradient(135deg, rgba(255,45,85,.1), rgba(191,90,242,.08));
+      border: 1px solid rgba(255,45,85,.25);
+      border-radius: 12px;
+      padding: 1.1rem 2rem;
+      margin: 2.5rem 0 2.5rem;
+    }
+    .pack-banner .pack-name {
+      font-family: Impact, sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: .12em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .pack-banner .pack-price {
+      font-family: Impact, sans-serif;
+      font-size: 1.4rem;
+      color: var(--pink);
+      text-shadow: var(--glow-pink);
+      letter-spacing: .06em;
+    }
+    .pack-banner .pack-badge {
+      font-size: .65rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      border: 1px solid rgba(0,245,212,.3);
+      border-radius: 20px;
+      padding: .25rem .75rem;
+    }
+    .horario-cards { display: flex; flex-direction: column; gap: 1rem; }
+    .horario-card {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surface);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .horario-card:hover {
+      border-color: rgba(255,45,85,.25);
+      box-shadow: 0 0 30px rgba(255,45,85,.07);
+    }
+    .hcard-date {
+      background: linear-gradient(160deg, rgba(255,45,85,.18), rgba(255,45,85,.06));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem .5rem;
+      border-right: 1px solid rgba(255,45,85,.15);
+    }
+    .hcard-day {
+      font-family: Impact, sans-serif;
+      font-size: 3rem;
+      line-height: 1;
+      color: var(--white);
+    }
+    .hcard-month {
+      font-size: .6rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-top: .2rem;
+    }
+    .hcard-classes {
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+    }
+    .hclass-row {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .hclass-time {
+      font-size: .68rem;
+      letter-spacing: .1em;
+      color: var(--bg);
+      background: var(--cyan);
+      border-radius: 4px;
+      padding: .2rem .55rem;
+      white-space: nowrap;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .hclass-time.late { background: var(--purple); }
+    .hclass-time.noon { background: var(--yellow); color: #111; }
+    .hclass-name {
+      font-size: .82rem;
+      color: var(--white);
+      letter-spacing: .05em;
+    }
+    .hcard-cta {
+      margin-top: .8rem;
+      padding-top: .8rem;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .hcard-cta button {
+      background: none;
+      border: 1px solid rgba(255,45,85,.35);
+      color: var(--pink);
+      font-family: inherit;
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: .4rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .hcard-cta button:hover { background: rgba(255,45,85,.12); }
+
     /* ─── CALENDAR ─── */
     .calendar-section {
       padding: 7rem 2rem;
@@ -748,6 +877,7 @@
     <div class="nav-logo"><img src="logo.png" alt="Bulnes pc" style="height:2rem;vertical-align:middle;margin-right:.5rem;border-radius:50%;">Bulnes pc</div>
     <ul class="nav-links">
       <li><a href="#galeria">Galería</a></li>
+      <li><a href="#horario">Horario</a></li>
       <li><a href="#clases">Clases</a></li>
       <li><a href="#inscripcion" onclick="openModal(null)">Inscribirse</a></li>
       <li><a href="#contacto">Contacto</a></li>
@@ -1026,6 +1156,22 @@
     </div>
   </section>
 
+  <!-- HORARIO -->
+  <section class="horario-section" id="horario">
+    <div class="horario-inner">
+      <span class="section-label reveal">// Horario</span>
+      <h2 class="section-title reveal" id="horarioTitle">Horario <span style="color:var(--cyan)" id="horarioMes"></span></h2>
+
+      <div class="pack-banner reveal">
+        <span class="pack-name">Pack <span id="packMes"></span> &mdash; 6 Bloques</span>
+        <span class="pack-price">$25.000</span>
+        <span class="pack-badge">&#161;Sin Matr&iacute;cula!</span>
+      </div>
+
+      <div class="horario-cards reveal" id="horarioCards"></div>
+    </div>
+  </section>
+
   <!-- CALENDAR -->
   <section class="calendar-section" id="clases">
     <div class="cal-inner">
@@ -1221,8 +1367,83 @@
 
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    /* ── Calendar ── */
+    /* ── Shared ── */
     const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+    /* ── Horario ── */
+    const SCHEDULE_ROTATION = [
+      [ // semana 1
+        { time: '10:00–11:30', type: 'morn', name: 'Iniciantes al pat\xEDn' },
+        { time: '12:00–13:30', type: 'noon', name: 'Free Jump' },
+        { time: '18:00–19:30', type: 'late', name: 'Derrape urbano' },
+      ],
+      [ // semana 2
+        { time: '10:00–11:30', type: 'morn', name: 'Freestyle Slalom' },
+        { time: '12:00–13:30', type: 'noon', name: 'Ruta Spots \u2022 Freeskate' },
+        { time: '16:00–17:30', type: 'late', name: 'Skate Cross circuito' },
+      ],
+      [ // semana 3
+        { time: '10:00–11:30', type: 'morn', name: 'Pumptrack' },
+        { time: '12:00–13:30', type: 'noon', name: 'Iniciantes al pat\xEDn' },
+        { time: '18:00–19:30', type: 'late', name: 'Derrape t\xE9cnico' },
+      ],
+      [ // semana 4
+        { time: '10:00–11:30', type: 'morn', name: 'Free Jump' },
+        { time: '12:00–13:30', type: 'noon', name: 'Freestyle Slalom' },
+        { time: '18:00–19:30', type: 'late', name: 'Derrape urbano' },
+      ],
+      [ // semana 5 (si hay 5 domingos)
+        { time: '10:00–11:30', type: 'morn', name: 'Ruta Spots \u2022 Freeskate' },
+        { time: '12:00–13:30', type: 'noon', name: 'Pumptrack' },
+        { time: '18:00–19:30', type: 'late', name: 'Derrape t\xE9cnico' },
+      ],
+    ];
+
+    (function buildHorario() {
+      const now    = new Date();
+      const year   = now.getFullYear();
+      const month  = now.getMonth();
+      const mesStr = MONTHS_ES[month];
+
+      document.getElementById('horarioMes').textContent = mesStr;
+      document.getElementById('packMes').textContent    = mesStr;
+
+      // Get all Sundays in the month
+      const sundays = [];
+      const days    = new Date(year, month + 1, 0).getDate();
+      for (let d = 1; d <= days; d++) {
+        if (new Date(year, month, d).getDay() === 0) sundays.push(d);
+      }
+
+      const container = document.getElementById('horarioCards');
+      sundays.forEach((day, i) => {
+        const classes  = SCHEDULE_ROTATION[i % SCHEDULE_ROTATION.length];
+        const dateLabel = day + ' de ' + mesStr + ' ' + year;
+
+        const card = document.createElement('div');
+        card.className = 'horario-card';
+        card.innerHTML = `
+          <div class="hcard-date">
+            <span class="hcard-day">${day}</span>
+            <span class="hcard-month">${mesStr.substring(0,3)}</span>
+          </div>
+          <div class="hcard-classes">
+            ${classes.map(c => `
+              <div class="hclass-row">
+                <span class="hclass-time ${c.type === 'late' ? 'late' : c.type === 'noon' ? 'noon' : ''}">${c.time}</span>
+                <span class="hclass-name">${c.name}</span>
+              </div>
+            `).join('')}
+            <div class="hcard-cta">
+              <button onclick="openModal('${dateLabel}')">Inscribirse &rarr;</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    })();
+
+    /* ── Calendar ── */
     let calYear, calMonth;
 
     function initCal() {
